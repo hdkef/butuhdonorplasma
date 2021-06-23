@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah PermintaanDonor</title>
+    <title>Tambah Permintaan Donor</title>
     <base href="/">
     <link rel="stylesheet" href="add/add.css" type="text/css">
     <link rel="stylesheet" href="public.css" type="text/css">
@@ -18,8 +18,8 @@
         </div>
     </div>
     <div class="center">
-        <div id="add-form">
-            <form name="addForm" method="POST" action="/add"  onsubmit="return validateForm()">
+        <div id="addForm">
+            <form name="addForm" method="POST" onsubmit="return validateForm()">
                 <input id="name" name="name" type="text" placeholder="Nama">
                 
                 <input id="age" name="age" type="text" placeholder="Usia dalam tahun">
@@ -36,13 +36,16 @@
                 
                 <label for="province">provinsi</label>
                 <select id="province" name="province">
+                    <option disabled selected value> -- select an option -- </option>
                     {{range $index, $elem := .province}}
                         <option value="{{$elem.ID}}">{{$elem.Name}}</option>
                     {{end}}
                 </select>
                 
                 <label for="city">kota / kab</label>
-                <select id="city"  name="city"></select>
+                <select id="city"  name="city">
+                    <option disabled selected value> -- select province first -- </option>
+                </select>
                 <!--Dynamic Contact View-->
                 
                 <label for="goldar">golongan darah</label>
@@ -64,6 +67,7 @@
                 </div>
                 
                 <input id="captcha" name="captcha" type="text" placeholder="Captcha">
+                <input name="captchaid" type="hidden" value="{{.captcha.ID}}">
                 
                 <button type="submit">submit</button>
             </form>

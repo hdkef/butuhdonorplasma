@@ -2,6 +2,7 @@ package controller
 
 import (
 	"butuhdonorplasma/models"
+	"errors"
 	"math"
 	"math/rand"
 )
@@ -42,7 +43,10 @@ func GetCaptcha() models.Captcha {
 	}
 }
 
-func CheckCaptchaAnswer(ID int64, Input string) bool {
-	answ := captchaAnswer[ID]
-	return answ == Input
+func CheckCaptcha(captchaID int64, captcha string) error {
+	answ := captchaAnswer[captchaID]
+	if answ == captcha {
+		return nil
+	}
+	return errors.New("captcha not match")
 }

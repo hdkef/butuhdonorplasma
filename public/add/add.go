@@ -3,9 +3,11 @@ package add
 import (
 	"butuhdonorplasma/controller"
 	"butuhdonorplasma/models"
+	"errors"
 	"fmt"
 	"net/http"
 	"path/filepath"
+	"strconv"
 	"text/template"
 )
 
@@ -24,7 +26,7 @@ func (x *AddHandler) Add() http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
 
 		if r.Method == http.MethodPost {
-			handleAddResult(rw, r)
+			handleAddPost(rw, r)
 			return
 		}
 
@@ -35,10 +37,16 @@ func (x *AddHandler) Add() http.HandlerFunc {
 		}
 
 		captcha := controller.GetCaptcha()
-		province, err := controller.GetProvince()
-		if err != nil {
-			fmt.Println(err.Error())
-			return
+		// province, err := controller.GetProvince()
+		// if err != nil {
+		// 	fmt.Println(err.Error())
+		// 	return
+		// }
+		province := []models.Province{
+			{
+				ID:   "1",
+				Name: "Jawa barat",
+			},
 		}
 
 		var data map[string]interface{} = map[string]interface{}{}
@@ -53,11 +61,24 @@ func (x *AddHandler) Add() http.HandlerFunc {
 	}
 }
 
-func handleAddResult(rw http.ResponseWriter, r *http.Request) {
-
+func handleAddPost(rw http.ResponseWriter, r *http.Request) {
+	fmt.Println("handleAddPost")
 	err := r.ParseForm()
 	if err != nil {
-		renderFailed(rw, r)
+		renderFailed(rw, r, err)
+		return
+	}
+
+	captchaID, err := strconv.Atoi(r.FormValue("captchaid"))
+	if err != nil {
+		renderFailed(rw, r, err)
+		return
+	}
+	captcha := r.FormValue("captcha")
+
+	err = controller.CheckCaptcha(int64(captchaID), captcha)
+	if err != nil {
+		renderFailed(rw, r, err)
 		return
 	}
 
@@ -74,6 +95,11 @@ func handleAddResult(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Println(patient)
+
+	if patient.Name == "" || patient.Age == "" || patient.Gender == "" || patient.Desc == "" || patient.HospitalName == "" || patient.ProvinceID == "" || patient.CityID == "" || patient.Goldar == "" || patient.Rhesus == "" {
+		renderFailed(rw, r, errors.New("something is missing"))
+		return
+	}
 
 	renderSuccess(rw, r)
 }
@@ -92,14 +118,14 @@ func renderSuccess(rw http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func renderFailed(rw http.ResponseWriter, r *http.Request) {
+func renderFailed(rw http.ResponseWriter, r *http.Request, errInfo error) {
 	tmpl, err := template.ParseFiles(dir_failed)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
 
-	err = tmpl.Execute(rw, nil)
+	err = tmpl.Execute(rw, errInfo.Error())
 	if err != nil {
 		fmt.Println(err.Error())
 		return
