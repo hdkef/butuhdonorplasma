@@ -25,11 +25,7 @@ func (x *FindHandler) Find() http.HandlerFunc {
 			return
 		}
 
-		data, err := controller.GetProvince()
-		if err != nil {
-			fmt.Println(err.Error())
-			return
-		}
+		data := controller.GetProvince()
 
 		err = tmpl.Execute(rw, data)
 		if err != nil {

@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"butuhdonorplasma/models"
+	"butuhdonorplasma/controller"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -21,17 +21,10 @@ func GetCityHandler() http.HandlerFunc {
 			return
 		}
 
-		// data, err := controller.GetCity(payload.ID)
-		// if err != nil {
-		// 	fmt.Println(err.Error())
-		// 	return
-		// }
-
-		data := []models.City{
-			{
-				ID:   "1",
-				Name: "Bdg",
-			},
+		data, err := controller.GetCity(payload.ID)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
 		}
 
 		err = json.NewEncoder(rw).Encode(&data)

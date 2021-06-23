@@ -37,21 +37,15 @@ func (x *AddHandler) Add() http.HandlerFunc {
 		}
 
 		captcha := controller.GetCaptcha()
-		// province, err := controller.GetProvince()
-		// if err != nil {
-		// 	fmt.Println(err.Error())
-		// 	return
-		// }
-		province := []models.Province{
-			{
-				ID:   "1",
-				Name: "Jawa barat",
-			},
+		provinces := controller.GetProvince()
+		if err != nil {
+			fmt.Println(err.Error())
+			return
 		}
 
 		var data map[string]interface{} = map[string]interface{}{}
 		data["captcha"] = captcha
-		data["province"] = province
+		data["province"] = provinces
 
 		err = tmpl.Execute(rw, data)
 		if err != nil {
