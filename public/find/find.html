@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find</title>
+    <base href="/">
+    <link rel="stylesheet" href="find/find.css" type="text/css">
+    <link rel="stylesheet" href="public.css" type="text/css">
+    <script src="find/find.js" defer></script> 
+</head>
+<body>
+    <div class="center">
+        <div>
+            <h1>Find those who needed</h1>
+            <h4>bantu mereka yang membutuhkan donor plasma convalescent di sekitar Anda</h4>
+        </div>
+    </div>
+    <div class="center">
+        <div id="find-form">
+            <form method="GET" name="findForm" action="/result" onsubmit="return validateForm()">
+                <div class="center">
+                    <div id="input-group">
+                        <label for="province">provinsi</label>
+                        <select id="province" name="province">
+                            {{range $index, $elem := .}}
+                                <option value="{{$elem.ID}}">{{$elem.Name}}</option>
+                            {{end}}
+                        </select>
+                        
+                        <label for="city">kota / kab</label>
+                        <select id="city"  name="city"></select>
+                        
+                        <label for="goldar">golongan darah</label>
+                        <select id="goldar" name="goldar">
+                            <option>A</option>
+                            <option>B</option>
+                            <option>AB</option>
+                            <option>O</option>
+                        </select>
+                        
+                        <label for="rhesus">rhesus</label>
+                        <select id="rhesus" name="rhesus">
+                            <option>+</option>
+                            <option>-</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="center" id="btn-group">
+                    <button type="submit">search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

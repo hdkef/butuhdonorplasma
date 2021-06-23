@@ -1,0 +1,15 @@
+h1 {
+    color:blue;
+}
+
+#btn-group {
+    margin-top:25px;
+}
+
+#btn-group button {
+    width: 200px;
+}
+
+#input-group {
+    text-align: left;
+}

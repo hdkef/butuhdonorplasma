@@ -1,0 +1,11 @@
+.center {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+input, select, label {
+    display: block;
+    margin-top:5px;
+    padding: 5px;
+}
