@@ -1,6 +1,6 @@
 let citySelect = document.getElementById("city")
 let provinceSelect = document.getElementById("province")
-let findForm = document.forms["findForm"]
+let addForm = document.forms["addForm"]
 
 provinceSelect.onchange = (event)=>{
     let id = provinceSelect.value
@@ -20,7 +20,8 @@ provinceSelect.onchange = (event)=>{
 }
 
 validateForm = ()=>{
-    if (findForm["province"].value && findForm["city"].value && findForm["goldar"].value && findForm["rhesus"].value){
+    if (addForm["province"].value && addForm["city"].value && addForm["goldar"].value && addForm["rhesus"].value && addForm["name"].value && addForm["age"].value && addForm["gender"].value && addForm["desc"].value  && addForm["hospitalname"].value && addForm["captcha"].value){
+        //checkCaptcha
         return true
     }
     alert("harap isi dengan benar")

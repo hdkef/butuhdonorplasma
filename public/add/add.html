@@ -4,12 +4,70 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add</title>
+    <title>Tambah PermintaanDonor</title>
     <base href="/">
     <link rel="stylesheet" href="add/add.css" type="text/css">
     <link rel="stylesheet" href="public.css" type="text/css">
+    <script src="add/add.js" defer></script> 
 </head>
 <body>
-    <h1>Add</h1>
+    <div class="center">
+        <div>
+            <h1>Tambahkan permintaan donor</h1>
+            <h4>semoga yang bersangkutan cepat sembuh ya</h4>
+        </div>
+    </div>
+    <div class="center">
+        <div id="add-form">
+            <form name="addForm" method="POST" action="/add"  onsubmit="return validateForm()">
+                <input id="name" name="name" type="text" placeholder="Nama">
+                
+                <input id="age" name="age" type="text" placeholder="Usia dalam tahun">
+                
+                <label for="gender">jenis kelamin</label>
+                <select id="gender" name="gender">
+                    <option value="F">wanita</option>
+                    <option value="M">pria</option>
+                </select>
+                
+                <textarea id="desc" name="desc" placeholder="Deskripsi"></textarea>
+                
+                <input id="hospitalname" name="hospitalname" type="text" placeholder="Nama Rumah Sakit">
+                
+                <label for="province">provinsi</label>
+                <select id="province" name="province">
+                    {{range $index, $elem := .province}}
+                        <option value="{{$elem.ID}}">{{$elem.Name}}</option>
+                    {{end}}
+                </select>
+                
+                <label for="city">kota / kab</label>
+                <select id="city"  name="city"></select>
+                <!--Dynamic Contact View-->
+                
+                <label for="goldar">golongan darah</label>
+                <select id="goldar" name="goldar">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="AB">AB</option>
+                    <option value="O">O</option>
+                </select>
+                
+                <label for="rhesus">rhesus</label>
+                <select id="rhesus" name="rhesus">
+                    <option value="+">+</option>
+                    <option value="-">-</option>
+                </select>
+                
+                <div class="center">
+                    <img id="captcha-img" src="{{.captcha.ImgURL}}">
+                </div>
+                
+                <input id="captcha" name="captcha" type="text" placeholder="Captcha">
+                
+                <button type="submit">submit</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
