@@ -1,6 +1,8 @@
 package result
 
 import (
+	"butuhdonorplasma/mock"
+	"butuhdonorplasma/models"
 	"fmt"
 	"html/template"
 	"net/http"
@@ -21,10 +23,14 @@ func (x *ResultHandler) Result() http.HandlerFunc {
 
 		queryParams := r.URL.Query()
 
-		//TOBEIMPLEMENTED
-		//get queryparams
+		searchKey := models.SearchKey{
+			ProvinceID: queryParams.Get("province"),
+			CityID:     queryParams.Get("city"),
+			Goldar:     queryParams.Get("goldar"),
+			Rhesus:     queryParams.Get("rhesus"),
+		}
 
-		fmt.Println(queryParams)
+		patients := mock.GetPatientsResult(searchKey)
 
 		tmpl, err := template.ParseFiles(dir)
 		if err != nil {
@@ -32,7 +38,7 @@ func (x *ResultHandler) Result() http.HandlerFunc {
 			return
 		}
 
-		err = tmpl.Execute(rw, 0)
+		err = tmpl.Execute(rw, patients)
 		if err != nil {
 			fmt.Println(err.Error())
 			return
