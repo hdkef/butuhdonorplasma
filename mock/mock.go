@@ -2,12 +2,13 @@ package mock
 
 import (
 	"butuhdonorplasma/models"
-	"math/rand"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func createOnePatient() models.Patient {
 	return models.Patient{
-		ID:           string(rand.Int31()),
+		ID:           primitive.NewObjectID(),
 		Name:         "Name",
 		Gender:       "Gender",
 		Age:          "Age",

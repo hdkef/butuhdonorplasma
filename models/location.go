@@ -1,12 +1,12 @@
 package models
 
 type Province struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+	ID   string `json:"id" csv:"provinceid"`
+	Name string `json:"name" csv:"provincename"`
 }
 
 type City struct {
-	ID         string `json:"id"`
-	PROVINCEID string `json:"province_id"`
-	Name       string `json:"name"`
+	ID         string `json:"id" csv:"cityid"`
+	ProvinceID string `json:"province_id" csv:"provinceid"`
+	Name       string `json:"name" csv:"cityname"`
 }

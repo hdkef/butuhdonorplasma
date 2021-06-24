@@ -1,6 +1,7 @@
 package dbdriver
 
 import (
+	"butuhdonorplasma/models"
 	"context"
 	"fmt"
 	"time"
@@ -20,17 +21,17 @@ func GetDBRepo(db *mongo.Database) *DBRepo {
 	}
 }
 
-func (x *DBRepo) InsertOne(col string, data bson.D) (string, error) {
+func (x *DBRepo) InsertOne(col string, data bson.D) (primitive.ObjectID, error) {
 
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 
 	res, err := x.DB.Collection(col).InsertOne(ctx, data)
 	if err != nil {
 		fmt.Println(err.Error())
-		return "", err
+		return primitive.ObjectID{}, err
 	}
 
-	return res.InsertedID.(primitive.ObjectID).String(), nil
+	return res.InsertedID.(primitive.ObjectID), nil
 }
 
 func (x *DBRepo) FindMany(col string, filter bson.M) (interface{}, error) {
@@ -43,17 +44,19 @@ func (x *DBRepo) FindMany(col string, filter bson.M) (interface{}, error) {
 		return nil, err
 	}
 
+	var documents []models.Patient
+
 	defer cursor.Close(ctx)
 	for cursor.Next(ctx) {
-		var document bson.M
+		var document models.Patient
 		if err = cursor.Decode(&document); err != nil {
 			fmt.Println(err.Error())
 			return "", err
 		}
-		fmt.Println(document)
+		documents = append(documents, document)
 	}
 
-	return nil, nil
+	return documents, nil
 }
 
 func (x *DBRepo) Delete(col string) error {

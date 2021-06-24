@@ -2,47 +2,30 @@ package controller
 
 import (
 	"butuhdonorplasma/models"
-	"encoding/json"
+	"encoding/csv"
+	"errors"
 	"fmt"
-	"net/http"
+	"io"
+	"io/ioutil"
 	"os"
-	"time"
+	"path/filepath"
 
 	"github.com/joho/godotenv"
+	"github.com/jszwec/csvutil"
 )
 
-var LocationAPI string
 var provinces []models.Province
+var PROVINCES = filepath.Join("data", "provinces.csv")
+var REGENCIES = filepath.Join("data", "regencies.csv")
 
 func init() {
 	godotenv.Load()
-	LocationAPI = os.Getenv("LOCATIONAPI")
-	provinces = retrieveProvince()
+	provinces = retrieveProvinceOnce()
 }
 
-func retrieveProvince() []models.Province {
-	provinceURL := fmt.Sprintf("%s/provinces.json", LocationAPI)
-
-	locationClient := http.Client{
-		Timeout: time.Second * 15, // Timeout after 15 seconds
-	}
-
-	req, err := http.NewRequest(http.MethodGet, provinceURL, nil)
+func retrieveProvinceOnce() []models.Province {
+	provinces, err := decodeProvinces()
 	if err != nil {
-		fmt.Println(err.Error())
-		panic(err.Error())
-	}
-
-	res, err := locationClient.Do(req)
-	if err != nil {
-		fmt.Println(err.Error())
-		panic(err.Error())
-	}
-	var provinces []models.Province
-
-	err = json.NewDecoder(res.Body).Decode(&provinces)
-	if err != nil {
-		fmt.Println(err.Error())
 		panic(err.Error())
 	}
 	return provinces
@@ -53,31 +36,79 @@ func GetProvince() []models.Province {
 }
 
 func GetCity(id string) ([]models.City, error) {
+	return decodeCitiesByProvinceID(id)
+}
 
-	cityURL := fmt.Sprintf("%s/regencies/%v.json", LocationAPI, id)
+func readFile(filepath string) ([]byte, error) {
 
-	locationClient := http.Client{
-		Timeout: time.Second * 5, // Timeout after 5 seconds
-	}
-
-	req, err := http.NewRequest(http.MethodGet, cityURL, nil)
+	file, err := ioutil.ReadFile(filepath)
 	if err != nil {
 		fmt.Println(err.Error())
 		return nil, err
 	}
 
-	res, err := locationClient.Do(req)
+	return file, nil
+}
+
+func decodeProvinces() ([]models.Province, error) {
+
+	csvInput, err := readFile(PROVINCES)
 	if err != nil {
 		fmt.Println(err.Error())
 		return nil, err
+	}
+
+	var provinces []models.Province
+
+	if err := csvutil.Unmarshal(csvInput, &provinces); err != nil {
+		return nil, err
+	}
+	return provinces, nil
+}
+
+func openFile(filepath string) (*os.File, error) {
+	file, err := os.Open(filepath)
+	if err != nil {
+		return nil, err
+	}
+	return file, nil
+}
+
+func decodeCitiesByProvinceID(ID string) ([]models.City, error) {
+
+	file, err := openFile(REGENCIES)
+	if err != nil {
+		fmt.Println(err.Error())
+		return []models.City{}, err
+	}
+
+	csvReader := csv.NewReader(file)
+	csvReader.Comma = ','
+
+	dec, err := csvutil.NewDecoder(csvReader)
+	if err != nil {
+		fmt.Println(err.Error())
+		return []models.City{}, err
 	}
 
 	var cities []models.City
 
-	err = json.NewDecoder(res.Body).Decode(&cities)
-	if err != nil {
-		fmt.Println(err.Error())
-		return nil, err
+	for {
+		var city models.City
+		err = dec.Decode(&city)
+		if err == io.EOF {
+			break
+		} else if err != nil {
+			panic(err.Error())
+		}
+
+		if city.ProvinceID == ID {
+			cities = append(cities, city)
+		}
+	}
+
+	if len(cities) == 0 {
+		return []models.City{}, errors.New("NO CITIES FOUND")
 	}
 	return cities, nil
 }
