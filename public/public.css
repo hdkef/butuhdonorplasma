@@ -9,3 +9,7 @@ input, select, label, textarea, button {
     margin-top:5px;
     padding: 5px;
 }
+
+h1 {
+    color:blue;
+}

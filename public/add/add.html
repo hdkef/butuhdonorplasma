@@ -19,56 +19,66 @@
     <div class="center">
         <div id="addForm">
             <form name="addForm" method="POST" onsubmit="return validateForm()">
-                <input id="name" name="name" type="text" placeholder="Nama">
+                <div id="input-group">
+                    <input id="name" name="name" type="text" placeholder="Nama">
                 
-                <input id="age" name="age" type="text" placeholder="Usia dalam tahun">
-                
-                <label for="gender">jenis kelamin</label>
-                <select id="gender" name="gender">
-                    <option value="F">wanita</option>
-                    <option value="M">pria</option>
-                </select>
-                
-                <textarea id="desc" name="desc" placeholder="Deskripsi"></textarea>
-                
-                <input id="hospitalname" name="hospitalname" type="text" placeholder="Nama Rumah Sakit">
-                
-                <label for="province">provinsi</label>
-                <select id="province" name="province">
-                    <option disabled selected value> -- select an option -- </option>
-                    {{range $index, $elem := .province}}
-                        <option value="{{$elem.ID}}">{{$elem.Name}}</option>
-                    {{end}}
-                </select>
-                
-                <label for="city">kota / kab</label>
-                <select id="city"  name="city">
-                    <option disabled selected value> -- select province first -- </option>
-                </select>
-                <!--Dynamic Contact View-->
-                
-                <label for="goldar">golongan darah</label>
-                <select id="goldar" name="goldar">
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="AB">AB</option>
-                    <option value="O">O</option>
-                </select>
-                
-                <label for="rhesus">rhesus</label>
-                <select id="rhesus" name="rhesus">
-                    <option value="+">+</option>
-                    <option value="-">-</option>
-                </select>
-                
-                <div class="center">
-                    <img id="captcha-img" src="{{.captcha.ImgURL}}">
+                    <input id="age" name="age" type="text" placeholder="Usia dalam tahun">
+                    
+                    <label for="gender">jenis kelamin</label>
+                    <select id="gender" name="gender">
+                        <option value="F">wanita</option>
+                        <option value="M">pria</option>
+                    </select>
+
+                    <label for="goldar">golongan darah</label>
+                    <select id="goldar" name="goldar">
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="AB">AB</option>
+                        <option value="O">O</option>
+                    </select>
+                    
+                    <label for="rhesus">rhesus</label>
+                    <select id="rhesus" name="rhesus">
+                        <option value="+">+</option>
+                        <option value="-">-</option>
+                    </select>
+                    
+                    <textarea id="desc" name="desc" placeholder="Deskripsi"></textarea>
+                    
+                    <input id="hospitalname" name="hospitalname" type="text" placeholder="Nama Rumah Sakit">
+                    
+                    <label for="province">provinsi</label>
+                    <select id="province" name="province">
+                        <option disabled selected value> -- pilih -- </option>
+                        {{range $index, $elem := .province}}
+                            <option value="{{$elem.ID}}">{{$elem.Name}}</option>
+                        {{end}}
+                    </select>
+                    
+                    <label for="city">kota / kab</label>
+                    <select id="city"  name="city">
+                        <option disabled selected value> -- pilih provinsi dulu -- </option>
+                    </select>
+                    <!--Dynamic Contact View-->
+                    <div id="cp">
+                        <label>contact person 1</label>
+                        <input id="cpname1" name="cpname" type="text" placeholder="Nama Contact Person">
+                        <input id="relation1" name="relation1" type="tel" placeholder="Hubungan dengan pasien">
+                        <textarea id="tel1" name="tel1" placeholder="List cara menghubungi (WA,Telegram,Line)"></textarea>
+                    </div>
+                    
+                    <button type="button" id="addcontact2">tambah CP ke 2</button>
+                    
+                    <div class="center">
+                        <img id="captcha-img" src="{{.captcha.ImgURL}}">
+                    </div>
+                    
+                    <input id="captcha" name="captcha" type="text" placeholder="Captcha">
+                    <input name="captchaid" type="hidden" value="{{.captcha.ID}}">
+                    
+                    <button type="submit">submit</button>
                 </div>
-                
-                <input id="captcha" name="captcha" type="text" placeholder="Captcha">
-                <input name="captchaid" type="hidden" value="{{.captcha.ID}}">
-                
-                <button type="submit">submit</button>
             </form>
         </div>
     </div>

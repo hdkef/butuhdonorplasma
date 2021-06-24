@@ -1,12 +1,16 @@
 package main
 
 import (
+	"butuhdonorplasma/dbdriver"
 	"butuhdonorplasma/handler"
 	"butuhdonorplasma/public"
+	"context"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
@@ -36,30 +40,46 @@ func (h publicHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	http.FileServer(http.Dir(h.staticPath)).ServeHTTP(w, r)
 }
 
+var DBNAME string
+var PORT string
+
 func init() {
 	godotenv.Load()
+	PORT = os.Getenv("PORT")
+	DBNAME = os.Getenv("DBNAME")
 }
 
 func main() {
 
-	publicpages := public.GetPublicPages()
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+
+	dbclient, err := dbdriver.DBConn(ctx)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	dbrepo := dbdriver.DBRepo{
+		DB: dbclient.Database(DBNAME),
+	}
+	defer dbclient.Disconnect(ctx)
+
+	publicpages := public.GetPublicPages(&dbrepo)
 
 	r := mux.NewRouter()
 	r.HandleFunc("/", publicpages.IndexPage())
 	r.HandleFunc("/find", publicpages.FindPage())
 	r.HandleFunc("/add", publicpages.AddPage())
+	r.HandleFunc("/delete", publicpages.DeletePage())
 	r.HandleFunc("/result", publicpages.ResultPage())
 	r.HandleFunc("/getcity", handler.GetCityHandler())
 
 	public := publicHandler{staticPath: os.Getenv("STATICPATH")}
 	r.PathPrefix("/").HandlerFunc(public.ServeHTTP)
 
-	PORT := os.Getenv("PORT")
 	addr := fmt.Sprintf(":%s", PORT)
 
 	fmt.Println("listening to port : ", PORT)
 
-	err := http.ListenAndServe(addr, r)
+	err = http.ListenAndServe(addr, r)
 	if err != nil {
 		panic(err.Error())
 	}

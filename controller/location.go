@@ -24,7 +24,7 @@ func retrieveProvince() []models.Province {
 	provinceURL := fmt.Sprintf("%s/provinces.json", LocationAPI)
 
 	locationClient := http.Client{
-		Timeout: time.Second * 5, // Timeout after 2 seconds
+		Timeout: time.Second * 15, // Timeout after 15 seconds
 	}
 
 	req, err := http.NewRequest(http.MethodGet, provinceURL, nil)
@@ -57,7 +57,7 @@ func GetCity(id string) ([]models.City, error) {
 	cityURL := fmt.Sprintf("%s/regencies/%v.json", LocationAPI, id)
 
 	locationClient := http.Client{
-		Timeout: time.Second * 5, // Timeout after 2 seconds
+		Timeout: time.Second * 5, // Timeout after 5 seconds
 	}
 
 	req, err := http.NewRequest(http.MethodGet, cityURL, nil)

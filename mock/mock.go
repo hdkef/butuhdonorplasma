@@ -18,17 +18,15 @@ func createOnePatient() models.Patient {
 		CityName:     "CityName",
 		Goldar:       "Goldar",
 		Rhesus:       "Rhesus",
-		Contact: []models.Contact{
-			{
-				Name:   "Name",
-				Tel:    "Tel",
-				Status: "Status",
-			},
-			{
-				Name:   "Name",
-				Tel:    "Tel",
-				Status: "Status",
-			},
+		Contact1: models.Contact{
+			Name:     "Name",
+			Tel:      "Tel",
+			Relation: "Status",
+		},
+		Contact2: models.Contact{
+			Name:     "Name",
+			Tel:      "Tel",
+			Relation: "Status",
 		},
 	}
 }

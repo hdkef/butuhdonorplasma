@@ -1,7 +1,9 @@
 package public
 
 import (
+	"butuhdonorplasma/dbdriver"
 	"butuhdonorplasma/public/add"
+	"butuhdonorplasma/public/delete"
 	"butuhdonorplasma/public/find"
 	"butuhdonorplasma/public/index"
 	"butuhdonorplasma/public/result"
@@ -9,24 +11,31 @@ import (
 )
 
 type PublicPages struct {
+	DBRepo *dbdriver.DBRepo
 }
 
-func GetPublicPages() *PublicPages {
-	return &PublicPages{}
+func GetPublicPages(dbrepo *dbdriver.DBRepo) *PublicPages {
+	return &PublicPages{
+		DBRepo: dbrepo,
+	}
 }
 
 func (x *PublicPages) AddPage() http.HandlerFunc {
-	return add.GetAddHandler().Add()
+	return add.GetAddHandler(x.DBRepo).Add()
 }
 
 func (x *PublicPages) FindPage() http.HandlerFunc {
-	return find.GetFindHandler().Find()
+	return find.GetFindHandler(x.DBRepo).Find()
 }
 
 func (x *PublicPages) IndexPage() http.HandlerFunc {
-	return index.GetIndexHandler().Index()
+	return index.GetIndexHandler(x.DBRepo).Index()
 }
 
 func (x *PublicPages) ResultPage() http.HandlerFunc {
-	return result.GetResultHandler().Result()
+	return result.GetResultHandler(x.DBRepo).Result()
+}
+
+func (x *PublicPages) DeletePage() http.HandlerFunc {
+	return delete.GetDeleteHandler(x.DBRepo).Delete()
 }

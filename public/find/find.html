@@ -23,13 +23,16 @@
                     <div id="input-group">
                         <label for="province">provinsi</label>
                         <select id="province" name="province">
+                            <option disabled selected value> -- pilih -- </option>
                             {{range $index, $elem := .}}
                                 <option value="{{$elem.ID}}">{{$elem.Name}}</option>
                             {{end}}
                         </select>
                         
                         <label for="city">kota / kab</label>
-                        <select id="city"  name="city"></select>
+                        <select id="city"  name="city">
+                            <option disabled selected value> -- pilih provinsi dulu -- </option>
+                        </select>
                         
                         <label for="goldar">golongan darah</label>
                         <select id="goldar" name="goldar">

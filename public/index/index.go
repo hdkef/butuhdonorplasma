@@ -1,6 +1,7 @@
 package index
 
 import (
+	"butuhdonorplasma/dbdriver"
 	"fmt"
 	"net/http"
 	"path/filepath"
@@ -10,10 +11,13 @@ import (
 var dir string = filepath.Join("public", "index", "index.html")
 
 type IndexHandler struct {
+	DBRepo *dbdriver.DBRepo
 }
 
-func GetIndexHandler() *IndexHandler {
-	return &IndexHandler{}
+func GetIndexHandler(dbrepo *dbdriver.DBRepo) *IndexHandler {
+	return &IndexHandler{
+		DBRepo: dbrepo,
+	}
 }
 
 func (x *IndexHandler) Index() http.HandlerFunc {

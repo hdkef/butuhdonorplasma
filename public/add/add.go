@@ -2,6 +2,7 @@ package add
 
 import (
 	"butuhdonorplasma/controller"
+	"butuhdonorplasma/dbdriver"
 	"butuhdonorplasma/models"
 	"errors"
 	"fmt"
@@ -16,10 +17,13 @@ var dir_failed string = filepath.Join("public", "add", "add-failed.html")
 var dir_success string = filepath.Join("public", "add", "add-success.html")
 
 type AddHandler struct {
+	DBRepo *dbdriver.DBRepo
 }
 
-func GetAddHandler() *AddHandler {
-	return &AddHandler{}
+func GetAddHandler(dbrepo *dbdriver.DBRepo) *AddHandler {
+	return &AddHandler{
+		DBRepo: dbrepo,
+	}
 }
 
 func (x *AddHandler) Add() http.HandlerFunc {
@@ -56,7 +60,7 @@ func (x *AddHandler) Add() http.HandlerFunc {
 }
 
 func handleAddPost(rw http.ResponseWriter, r *http.Request) {
-	fmt.Println("handleAddPost")
+
 	err := r.ParseForm()
 	if err != nil {
 		renderFailed(rw, r, err)

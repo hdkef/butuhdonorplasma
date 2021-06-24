@@ -1,6 +1,24 @@
 let citySelect = document.getElementById("city")
 let provinceSelect = document.getElementById("province")
+let addContact2 = document.getElementById("addcontact2")
 let addForm = document.forms["addForm"]
+let cp = document.getElementById("cp")
+
+addContact2.onclick = (event)=>{
+    var label = document.createElement('label')
+    label.innerText = "contact person 2"
+    var cpname2 = document.createElement('input')
+    cpname2.name = "cpname2"
+    cpname2.placeholder = "Nama Contact Person"
+    var relation2 = document.createElement('input')
+    relation2.placeholder = "Hubungan dengan pasien"
+    relation2.name = "relation2"
+    var tel2 = document.createElement('textarea')
+    tel2.name = "tel2"
+    tel2.placeholder = "List cara menghubungi (WA,Telegram,Line)"
+    cp.append(label,cpname2,relation2,tel2)
+    addContact2.style.display = "none"
+}
 
 provinceSelect.onchange = (event)=>{
     let id = provinceSelect.value

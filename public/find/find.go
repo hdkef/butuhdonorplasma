@@ -2,6 +2,7 @@ package find
 
 import (
 	"butuhdonorplasma/controller"
+	"butuhdonorplasma/dbdriver"
 	"fmt"
 	"html/template"
 	"net/http"
@@ -11,10 +12,13 @@ import (
 var dir string = filepath.Join("public", "find", "find.html")
 
 type FindHandler struct {
+	DBRepo *dbdriver.DBRepo
 }
 
-func GetFindHandler() *FindHandler {
-	return &FindHandler{}
+func GetFindHandler(dbrepo *dbdriver.DBRepo) *FindHandler {
+	return &FindHandler{
+		DBRepo: dbrepo,
+	}
 }
 
 func (x *FindHandler) Find() http.HandlerFunc {

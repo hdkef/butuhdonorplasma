@@ -1,7 +1,10 @@
 package models
 
+import "time"
+
 type Patient struct {
 	ID           string
+	Date         time.Time
 	Name         string
 	Gender       string
 	Age          string
@@ -13,11 +16,12 @@ type Patient struct {
 	CityName     string
 	Goldar       string
 	Rhesus       string
-	Contact      []Contact
+	Contact1     Contact
+	Contact2     Contact
 }
 
 type Contact struct {
-	Name   string
-	Tel    string
-	Status string
+	Name     string
+	Tel      string
+	Relation string
 }

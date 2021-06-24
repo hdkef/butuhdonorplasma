@@ -1,6 +1,7 @@
 package result
 
 import (
+	"butuhdonorplasma/dbdriver"
 	"butuhdonorplasma/mock"
 	"butuhdonorplasma/models"
 	"fmt"
@@ -12,10 +13,13 @@ import (
 var dir string = filepath.Join("public", "result", "result.html")
 
 type ResultHandler struct {
+	DBRepo *dbdriver.DBRepo
 }
 
-func GetResultHandler() *ResultHandler {
-	return &ResultHandler{}
+func GetResultHandler(dbrepo *dbdriver.DBRepo) *ResultHandler {
+	return &ResultHandler{
+		DBRepo: dbrepo,
+	}
 }
 
 func (x *ResultHandler) Result() http.HandlerFunc {
