@@ -113,8 +113,7 @@ func (x *DBRepo) FindManyPatients(searchKey models.SearchKey) ([]models.Patient,
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 
 	cursor, err := x.DB.Collection(konstant.Col_patients).Find(ctx, bson.M{
-		konstant.Provinceid: searchKey.ProvinceID,
-		konstant.Cityid:     searchKey.CityID,
+		konstant.Cityid: searchKey.CityID,
 	})
 	if err != nil {
 		fmt.Println(err.Error())
