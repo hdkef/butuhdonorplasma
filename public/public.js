@@ -21,7 +21,14 @@ getCity = (provinceidSelect,selectedprovinceid,cityidSelect)=>{
 
 deleteChildren = (parent)=>{
     while (parent.firstChild) {
-        console.log("remove")
         parent.removeChild(parent.firstChild);
     }
+}
+
+sanitize = (input)=>{
+    if (input.includes("script")){
+        alert("the word contain 'script' is forbidden")
+        return false
+    }
+    return true
 }

@@ -7,6 +7,7 @@
     <title>hasil pencarian</title>
     <link rel="stylesheet" href="result/result.css" type="text/css">
     <link rel="stylesheet" href="public.css" type="text/css">
+    <script src="result/result.js"></script>
 </head>
 <body>
     <div id="container">
@@ -19,6 +20,7 @@
             <div class="center">
                 <table>
                     <tr>
+                        <th>Tanggal</th>
                         <th>Nama</th>
                         <th>Usia</th>
                         <th>Golongan darah</th>
@@ -28,17 +30,20 @@
                     </tr>
                     {{range $index, $elem := .}}
                     <tr>
+                        <td>{{$elem.Date}}</td>
                         <td>{{$elem.Name}}</td>
                         <td>{{$elem.Age}}</td>
                         <td>{{$elem.Goldar}}</td>
                         <td>{{$elem.Rhesus}}</td>
                         <td>{{$elem.HospitalName}}</td>
-                        <td><button>detail</button></td>
+                        <td><button type="button" onclick="openModal()">kontak</button></td>
                     </tr>
                     {{end}}
                 </table>
             </div>
         </div>
+    </div>
+    <div id="modal">
     </div>
 </body>
 </html>
