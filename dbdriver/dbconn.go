@@ -64,7 +64,7 @@ func CreateIndex(client *mongo.Client) error {
 	mod := mongo.IndexModel{
 		Keys: bson.M{
 			konstant.Cityid: 1, //create index for city id for fast query
-		}, Options: options.Index().SetExpireAfterSeconds(1209600), //Time to live for automatically delete after 1 week
+		}, Options: options.Index().SetExpireAfterSeconds(604800), //Time to live for automatically delete after 1 week
 	}
 
 	_, err := client.Database(DBNAME).Collection(konstant.Col_patients).Indexes().CreateOne(

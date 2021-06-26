@@ -7,8 +7,8 @@ table, th, td {
 }
 
 #modal {
-    display: none;
-    position: fixed;
+    display: block;
+    position: none;
     z-index: 1;
     left: 0;
     top: 0;

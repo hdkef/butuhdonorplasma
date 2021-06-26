@@ -6,7 +6,6 @@ import (
 	"butuhdonorplasma/konstant"
 	"butuhdonorplasma/models"
 	"errors"
-	"fmt"
 	"net/http"
 	"path/filepath"
 	"strconv"
@@ -77,21 +76,17 @@ func handleAddPost(rw http.ResponseWriter, r *http.Request, x *AddHandler) {
 		CityName:     r.FormValue(konstant.Cityname),
 		Goldar:       r.FormValue(konstant.Goldar),
 		Rhesus:       r.FormValue(konstant.Rhesus),
-		Contact1: models.Contact{
-			Name:     r.FormValue(konstant.Cpname1),
-			Tel:      r.FormValue(konstant.Cptel1),
-			Relation: r.FormValue(konstant.Cprelation1),
-		},
+		Cpname1:      r.FormValue(konstant.Cpname1),
+		Cptel1:       r.FormValue(konstant.Cptel1),
+		Cprelation1:  r.FormValue(konstant.Cprelation1),
 	}
 
 	cpname2 := r.FormValue(konstant.Cpname2)
 
-	fmt.Println(patient)
-
 	if cpname2 != "" {
-		patient.Contact2.Name = cpname2
-		patient.Contact2.Tel = r.FormValue(konstant.Cptel2)
-		patient.Contact2.Tel = r.FormValue(konstant.Cprelation2)
+		patient.Cpname2 = cpname2
+		patient.Cptel2 = r.FormValue(konstant.Cptel2)
+		patient.Cprelation2 = r.FormValue(konstant.Cprelation2)
 	}
 
 	if patient.Name == "" || patient.Age == "" || patient.Desc == "" || patient.HospitalName == "" || patient.ProvinceID == "" || patient.CityID == "" || patient.Goldar == "" || patient.Rhesus == "" {
