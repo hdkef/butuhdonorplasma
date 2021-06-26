@@ -8,6 +8,7 @@
     <base href="/">
     <link rel="stylesheet" href="add/add.css" type="text/css">
     <link rel="stylesheet" href="public.css" type="text/css">
+    <script src="public.js" defer></script> 
     <script src="add/add.js" defer></script> 
 </head>
 <body>
@@ -18,17 +19,11 @@
     </div>
     <div class="center">
         <div id="addForm">
-            <form name="addForm" method="POST" onsubmit="return validateForm()">
-                <div id="input-group">
+            <form name="addForm" method="POST" onsubmit="return validateForm(event)">
+                <div class="input-group">
                     <input id="name" name="name" type="text" placeholder="Nama">
                 
                     <input id="age" name="age" type="text" placeholder="Usia dalam tahun">
-                    
-                    <label for="gender">jenis kelamin</label>
-                    <select id="gender" name="gender">
-                        <option value="F">wanita</option>
-                        <option value="M">pria</option>
-                    </select>
 
                     <label for="goldar">golongan darah</label>
                     <select id="goldar" name="goldar">
@@ -48,24 +43,24 @@
                     
                     <input id="hospitalname" name="hospitalname" type="text" placeholder="Nama Rumah Sakit">
                     
-                    <label for="province">provinsi</label>
-                    <select id="province" name="province">
+                    <label for="provinceid">provinsi</label>
+                    <select id="provinceid" name="provinceid">
                         <option disabled selected value> -- pilih -- </option>
                         {{range $index, $elem := .province}}
                             <option value="{{$elem.ID}}">{{$elem.Name}}</option>
                         {{end}}
                     </select>
                     
-                    <label for="city">kota / kab</label>
-                    <select id="city"  name="city">
+                    <label for="cityid">kota / kab</label>
+                    <select id="cityid"  name="cityid">
                         <option disabled selected value> -- pilih provinsi dulu -- </option>
                     </select>
                     <!--Dynamic Contact View-->
                     <div id="cp">
                         <label>contact person 1</label>
-                        <input id="cpname1" name="cpname" type="text" placeholder="Nama Contact Person">
-                        <input id="relation1" name="relation1" type="tel" placeholder="Hubungan dengan pasien">
-                        <textarea id="tel1" name="tel1" placeholder="List cara menghubungi (WA,Telegram,Line)"></textarea>
+                        <input id="cpname1" name="cpname1" type="text" placeholder="Nama Contact Person">
+                        <input id="cprelation1" name="cprelation1" type="tel" placeholder="Hubungan dengan pasien">
+                        <textarea id="cptel1" name="cptel1" placeholder="List cara menghubungi (WA,Telegram,Line)"></textarea>
                     </div>
                     
                     <button type="button" id="addcontact2">tambah CP ke 2</button>
@@ -76,6 +71,8 @@
                     
                     <input id="captcha" name="captcha" type="text" placeholder="Captcha">
                     <input name="captchaid" type="hidden" value="{{.captcha.ID}}">
+                    <input id="provincename" name="provincename" type="hidden">
+                    <input id="cityname" name="cityname" type="hidden">
                     
                     <button type="submit">submit</button>
                 </div>

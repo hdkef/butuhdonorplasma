@@ -7,8 +7,19 @@
     <title>Document</title>
     <link rel="stylesheet" href="delete/delete.css" type="text/css">
     <link rel="stylesheet" href="public.css" type="text/css">
+    <script src="delete/delete.js" defer></script>
 </head>
 <body>
-    <h1>Delete Page</h1>
+    <div class="center">
+        <h1>Delete Page</h1>
+    </div>
+    <div class="center">
+        <div id="delete-form">
+            <form name="deleteForm" action="/delete" method="POST" onsubmit="return validateForm()">
+                <input name="id" placeholder="id">
+                <button type="submit">delete</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

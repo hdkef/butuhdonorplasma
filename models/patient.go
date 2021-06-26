@@ -1,16 +1,13 @@
 package models
 
 import (
-	"time"
-
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type Patient struct {
 	ID           primitive.ObjectID `bson:"_id"`
-	Date         time.Time          `bson:"date"`
+	Date         string             `bson:"date"`
 	Name         string             `bson:"name"`
-	Gender       string             `bson:"gender"`
 	Age          string             `bson:"age"`
 	Desc         string             `bson:"desc"`
 	HospitalName string             `bson:"hospitalname"`

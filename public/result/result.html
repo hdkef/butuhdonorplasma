@@ -20,16 +20,18 @@
                 <table>
                     <tr>
                         <th>Nama</th>
-                        <th>Jenis Kelamin</th>
                         <th>Usia</th>
+                        <th>Golongan darah</th>
+                        <th>Rhesus</th>
                         <th>Nama Rumah Sakit</th>
-                        <th>Detail</th>
+                        <th>Detail Contact Person</th>
                     </tr>
                     {{range $index, $elem := .}}
                     <tr>
                         <td>{{$elem.Name}}</td>
-                        <td>{{$elem.Gender}}</td>
                         <td>{{$elem.Age}}</td>
+                        <td>{{$elem.Goldar}}</td>
+                        <td>{{$elem.Rhesus}}</td>
                         <td>{{$elem.HospitalName}}</td>
                         <td><button>detail</button></td>
                     </tr>

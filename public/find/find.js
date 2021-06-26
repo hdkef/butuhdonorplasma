@@ -1,26 +1,16 @@
-let citySelect = document.getElementById("city")
-let provinceSelect = document.getElementById("province")
+let cityidSelect = document.getElementById("cityid")
+let provinceidSelect = document.getElementById("provinceid")
 let findForm = document.forms["findForm"]
+let selectedprovinceid
 
-provinceSelect.onchange = (event)=>{
-    let id = provinceSelect.value
-    fetch('/getcity',{
-        method:'POST',
-        body:JSON.stringify({id:id})
-    }).then((res)=>{
-        return res.json()
-    }).then((cities)=>{
-        for (let city of cities) {
-            var added = document.createElement('option');
-            added.value = city.id;
-            added.innerHTML = city.name;
-            citySelect.append(added);
-        }
-    })
+provinceidSelect.onchange = (event)=>{
+    getCity(provinceidSelect,selectedprovinceid,cityidSelect) //ada di public.js
 }
 
 validateForm = ()=>{
-    if (findForm["province"].value && findForm["city"].value && findForm["goldar"].value && findForm["rhesus"].value){
+    let provinceid = findForm["provinceid"].value
+    let cityid = findForm["cityid"].value
+    if (provinceid && cityid && cityid){
         return true
     }
     alert("harap isi dengan benar")

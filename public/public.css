@@ -13,3 +13,7 @@ input, select, label, textarea, button {
 h1 {
     color:blue;
 }
+
+.input-group {
+    text-align: left;
+}

@@ -10,7 +10,6 @@ func createOnePatient() models.Patient {
 	return models.Patient{
 		ID:           primitive.NewObjectID(),
 		Name:         "Name",
-		Gender:       "Gender",
 		Age:          "Age",
 		Desc:         "Desc",
 		HospitalName: "HospitalName",

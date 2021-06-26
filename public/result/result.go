@@ -1,11 +1,11 @@
 package result
 
 import (
+	"butuhdonorplasma/controller"
 	"butuhdonorplasma/dbdriver"
-	"butuhdonorplasma/mock"
+	"butuhdonorplasma/konstant"
 	"butuhdonorplasma/models"
 	"fmt"
-	"html/template"
 	"net/http"
 	"path/filepath"
 )
@@ -28,24 +28,17 @@ func (x *ResultHandler) Result() http.HandlerFunc {
 		queryParams := r.URL.Query()
 
 		searchKey := models.SearchKey{
-			ProvinceID: queryParams.Get("province"),
-			CityID:     queryParams.Get("city"),
-			Goldar:     queryParams.Get("goldar"),
-			Rhesus:     queryParams.Get("rhesus"),
+			ProvinceID: queryParams.Get(konstant.Provinceid),
+			CityID:     queryParams.Get(konstant.Cityid),
 		}
 
-		patients := mock.GetPatientsResult(searchKey)
-
-		tmpl, err := template.ParseFiles(dir)
+		//Find from database
+		patients, err := x.DBRepo.FindManyPatients(searchKey)
 		if err != nil {
 			fmt.Println(err.Error())
 			return
 		}
 
-		err = tmpl.Execute(rw, patients)
-		if err != nil {
-			fmt.Println(err.Error())
-			return
-		}
+		controller.RenderPage(rw, r, patients, dir)
 	}
 }

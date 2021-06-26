@@ -8,6 +8,7 @@
     <base href="/">
     <link rel="stylesheet" href="find/find.css" type="text/css">
     <link rel="stylesheet" href="public.css" type="text/css">
+    <script src="public.js" defer></script> 
     <script src="find/find.js" defer></script> 
 </head>
 <body>
@@ -20,33 +21,20 @@
         <div id="find-form">
             <form method="GET" name="findForm" action="/result" onsubmit="return validateForm()">
                 <div class="center">
-                    <div id="input-group">
-                        <label for="province">provinsi</label>
-                        <select id="province" name="province">
+                    <div class="input-group">
+                        <label for="provinceid">provinsi</label>
+                        <select id="provinceid" name="provinceid">
                             <option disabled selected value> -- pilih -- </option>
                             {{range $index, $elem := .}}
                                 <option value="{{$elem.ID}}">{{$elem.Name}}</option>
                             {{end}}
                         </select>
                         
-                        <label for="city">kota / kab</label>
-                        <select id="city"  name="city">
+                        <label for="cityid">kota / kab</label>
+                        <select id="cityid"  name="cityid">
                             <option disabled selected value> -- pilih provinsi dulu -- </option>
                         </select>
                         
-                        <label for="goldar">golongan darah</label>
-                        <select id="goldar" name="goldar">
-                            <option value="A">A</option>
-                            <option value="B">B</option>
-                            <option value="AB">AB</option>
-                            <option value="O">O</option>
-                        </select>
-                        
-                        <label for="rhesus">rhesus</label>
-                        <select id="rhesus" name="rhesus">
-                            <option>+</option>
-                            <option>-</option>
-                        </select>
                     </div>
                 </div>
                 <div class="center" id="btn-group">
