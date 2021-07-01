@@ -13,18 +13,12 @@ type DeleteHandler struct {
 	DBRepo *dbdriver.DBRepo
 }
 
-//go:embed delete.html
+//go:embed *.html
 var deletetmpl embed.FS
 
-//go:embed delete-success.html
-var deletesuccess embed.FS
-
-//go:embed fail.html
-var deletefailed embed.FS
-
 var deletetemplates *template.Template = template.Must(template.ParseFS(deletetmpl, "delete.html"))
-var deletesuccesstemplates *template.Template = template.Must(template.ParseFS(deletesuccess, "delete-success.html"))
-var deletefailtemplates *template.Template = template.Must(template.ParseFS(deletefailed, "fail.html"))
+var deletesuccesstemplates *template.Template = template.Must(template.ParseFS(deletetmpl, "delete-success.html"))
+var deletefailtemplates *template.Template = template.Must(template.ParseFS(deletetmpl, "fail.html"))
 
 func GetDeleteHandler(dbrepo *dbdriver.DBRepo) *DeleteHandler {
 	return &DeleteHandler{

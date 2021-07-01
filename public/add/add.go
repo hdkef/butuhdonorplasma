@@ -12,18 +12,12 @@ import (
 	"strconv"
 )
 
-//go:embed add.html
+//go:embed *.html
 var addtmpl embed.FS
 
-//go:embed add-success.html
-var addsuccess embed.FS
-
-//go:embed fail.html
-var addfailed embed.FS
-
 var addtemplates *template.Template = template.Must(template.ParseFS(addtmpl, "add.html"))
-var addsuccesstemplates *template.Template = template.Must(template.ParseFS(addsuccess, "add-success.html"))
-var addfailtemplates *template.Template = template.Must(template.ParseFS(addfailed, "fail.html"))
+var addsuccesstemplates *template.Template = template.Must(template.ParseFS(addtmpl, "add-success.html"))
+var addfailtemplates *template.Template = template.Must(template.ParseFS(addtmpl, "fail.html"))
 
 type AddHandler struct {
 	DBRepo *dbdriver.DBRepo

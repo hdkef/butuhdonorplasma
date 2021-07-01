@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-//go:embed find.html
+//go:embed *.html
 var tmpl embed.FS
 var thistemplates *template.Template = template.Must(template.ParseFS(tmpl, "find.html"))
 

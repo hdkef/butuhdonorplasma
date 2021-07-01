@@ -11,7 +11,7 @@ import (
 	"net/http"
 )
 
-//go:embed result.html
+//go:embed *.html
 var tmpl embed.FS
 var thistemplates *template.Template = template.Must(template.ParseFS(tmpl, "result.html"))
 
