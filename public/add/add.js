@@ -40,20 +40,6 @@ validateForm = (e)=>{
     provincename.value = provinceidSelect.options[provinceidSelect.selectedIndex].innerHTML
     cityname.value = cityidSelect.options[cityidSelect.selectedIndex].innerHTML
     if (validateAge(+age) && provinceid && cityid && goldar && rhesus && name && age && desc  && hospitalname && captcha){
-        let cpname1 = addForm["cpname1"].value
-        let cptel1 = addForm["cptel1"].value
-        let cprelation1 = addForm["cprelation1"].value
-        let cpname2 = addForm["cpname2"].value
-        let cptel2 = addForm["cptel2"].value
-        let cprelation2 = addForm["cprelation2"].value
-        if (!sanitize(name) || !sanitize(age) || !sanitize(desc) || !sanitize(captcha) || !sanitize(hospitalname) || !sanitize(cpname1) || !sanitize(cptel1) || !sanitize (cprelation1)){
-            if (cpname2){
-                if(!sanitize(cpname2) || !sanitize(cptel2) || !sanitize (cprelation2)){ //if there are two contacts
-                    return false
-                }
-            }
-            return false //if the input contain 'script' return false
-        }
         return true
     }
     alert("harap isi form dengan benar")

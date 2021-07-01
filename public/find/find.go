@@ -3,11 +3,14 @@ package find
 import (
 	"butuhdonorplasma/controller"
 	"butuhdonorplasma/dbdriver"
+	"embed"
+	"html/template"
 	"net/http"
-	"path/filepath"
 )
 
-var dir string = filepath.Join("public", "find", "find.html")
+//go:embed find.html
+var tmpl embed.FS
+var thistemplates *template.Template = template.Must(template.ParseFS(tmpl, "find.html"))
 
 type FindHandler struct {
 	DBRepo *dbdriver.DBRepo
@@ -24,6 +27,6 @@ func (x *FindHandler) Find() http.HandlerFunc {
 
 		data := controller.GetProvince()
 
-		controller.RenderPage(rw, r, data, dir)
+		controller.RenderPage(rw, r, data, thistemplates)
 	}
 }

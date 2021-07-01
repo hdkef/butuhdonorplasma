@@ -3,18 +3,28 @@ package delete
 import (
 	"butuhdonorplasma/controller"
 	"butuhdonorplasma/dbdriver"
+	"embed"
 	"errors"
+	"html/template"
 	"net/http"
-	"path/filepath"
 )
 
 type DeleteHandler struct {
 	DBRepo *dbdriver.DBRepo
 }
 
-var dir string = filepath.Join("public", "delete", "delete.html")
-var dir_success string = filepath.Join("public", "delete", "delete-success.html")
-var dir_failed string = filepath.Join("public", "utils", "fail.html")
+//go:embed delete.html
+var deletetmpl embed.FS
+
+//go:embed delete-success.html
+var deletesuccess embed.FS
+
+//go:embed fail.html
+var deletefailed embed.FS
+
+var deletetemplates *template.Template = template.Must(template.ParseFS(deletetmpl, "delete.html"))
+var deletesuccesstemplates *template.Template = template.Must(template.ParseFS(deletesuccess, "delete-success.html"))
+var deletefailtemplates *template.Template = template.Must(template.ParseFS(deletefailed, "fail.html"))
 
 func GetDeleteHandler(dbrepo *dbdriver.DBRepo) *DeleteHandler {
 	return &DeleteHandler{
@@ -30,28 +40,28 @@ func (x *DeleteHandler) Delete() http.HandlerFunc {
 			return
 		}
 
-		controller.RenderPage(rw, r, nil, dir)
+		controller.RenderPage(rw, r, nil, deletetemplates)
 	}
 }
 
 func handleDeletePost(rw http.ResponseWriter, r *http.Request, x *DeleteHandler) {
 	err := r.ParseForm()
 	if err != nil {
-		controller.RenderFailed(rw, r, err, dir_failed)
+		controller.RenderFailed(rw, r, err, deletefailtemplates)
 		return
 	}
 
 	id := r.FormValue("id")
 	if id == "" {
-		controller.RenderFailed(rw, r, errors.New("NO ID inserted"), dir_failed)
+		controller.RenderFailed(rw, r, errors.New("NO ID inserted"), deletefailtemplates)
 		return
 	}
 
 	res, err := x.DBRepo.DeletePatientByID(id)
 	if err != nil {
-		controller.RenderFailed(rw, r, err, dir_failed)
+		controller.RenderFailed(rw, r, err, deletefailtemplates)
 		return
 	}
 
-	controller.RenderPage(rw, r, res, dir_success)
+	controller.RenderPage(rw, r, res, deletesuccesstemplates)
 }

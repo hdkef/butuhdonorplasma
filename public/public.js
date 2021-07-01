@@ -24,11 +24,3 @@ deleteChildren = (parent)=>{
         parent.removeChild(parent.firstChild);
     }
 }
-
-sanitize = (input)=>{
-    if (input.includes("script")){
-        alert("the word contain 'script' is forbidden")
-        return false
-    }
-    return true
-}

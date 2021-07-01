@@ -5,12 +5,15 @@ import (
 	"butuhdonorplasma/dbdriver"
 	"butuhdonorplasma/konstant"
 	"butuhdonorplasma/models"
+	"embed"
 	"fmt"
+	"html/template"
 	"net/http"
-	"path/filepath"
 )
 
-var dir string = filepath.Join("public", "result", "result.html")
+//go:embed result.html
+var tmpl embed.FS
+var thistemplates *template.Template = template.Must(template.ParseFS(tmpl, "result.html"))
 
 type ResultHandler struct {
 	DBRepo *dbdriver.DBRepo
@@ -39,6 +42,6 @@ func (x *ResultHandler) Result() http.HandlerFunc {
 			return
 		}
 
-		controller.RenderPage(rw, r, patients, dir)
+		controller.RenderPage(rw, r, patients, thistemplates)
 	}
 }
