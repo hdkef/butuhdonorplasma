@@ -12,6 +12,7 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/NYTimes/gziphandler"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 )
@@ -79,7 +80,7 @@ func main() {
 
 	fmt.Println("listening to port : ", PORT)
 
-	err = http.ListenAndServe(addr, r)
+	err = http.ListenAndServe(addr, gziphandler.GzipHandler(r))
 	if err != nil {
 		panic(err.Error())
 	}

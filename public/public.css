@@ -4,6 +4,10 @@
     text-align: center;
 }
 
+a {
+    text-decoration: none;
+}
+
 input, select, label, textarea, button {
     display: block;
     margin-top:5px;
