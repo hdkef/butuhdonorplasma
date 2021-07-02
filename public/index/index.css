@@ -9,6 +9,7 @@
 }
 
 a button {
-    width: 300px;
+    width: 100px;
     height: 70px;
+    margin:5px;
 }

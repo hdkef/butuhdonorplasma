@@ -1,5 +1,11 @@
 FROM golang:latest
 
-COPY server /app/server
+RUN mkdir /app
 
-CMD ["./app/","server"]
+ADD . /app
+
+WORKDIR /app
+
+RUN go build -o server .
+
+CMD ["/app/server"]
