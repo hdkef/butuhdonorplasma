@@ -25,11 +25,11 @@ func (x *PublicPages) AddPage() http.HandlerFunc {
 }
 
 func (x *PublicPages) FindPage() http.HandlerFunc {
-	return find.GetFindHandler(x.DBRepo).Find()
+	return find.GetFindHandler().Find()
 }
 
 func (x *PublicPages) IndexPage() http.HandlerFunc {
-	return index.GetIndexHandler(x.DBRepo).Index()
+	return index.GetIndexHandler().Index()
 }
 
 func (x *PublicPages) ResultPage() http.HandlerFunc {

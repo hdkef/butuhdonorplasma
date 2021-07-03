@@ -2,7 +2,6 @@ package find
 
 import (
 	"butuhdonorplasma/controller"
-	"butuhdonorplasma/dbdriver"
 	"embed"
 	"html/template"
 	"net/http"
@@ -12,14 +11,10 @@ import (
 var tmpl embed.FS
 var thistemplates *template.Template = template.Must(template.ParseFS(tmpl, "find.html"))
 
-type FindHandler struct {
-	DBRepo *dbdriver.DBRepo
-}
+type FindHandler struct{}
 
-func GetFindHandler(dbrepo *dbdriver.DBRepo) *FindHandler {
-	return &FindHandler{
-		DBRepo: dbrepo,
-	}
+func GetFindHandler() *FindHandler {
+	return &FindHandler{}
 }
 
 func (x *FindHandler) Find() http.HandlerFunc {

@@ -2,7 +2,6 @@ package index
 
 import (
 	"butuhdonorplasma/controller"
-	"butuhdonorplasma/dbdriver"
 	"embed"
 	"html/template"
 	"net/http"
@@ -13,13 +12,10 @@ var tmpl embed.FS
 var thistemplates *template.Template = template.Must(template.ParseFS(tmpl, "index.html"))
 
 type IndexHandler struct {
-	DBRepo *dbdriver.DBRepo
 }
 
-func GetIndexHandler(dbrepo *dbdriver.DBRepo) *IndexHandler {
-	return &IndexHandler{
-		DBRepo: dbrepo,
-	}
+func GetIndexHandler() *IndexHandler {
+	return &IndexHandler{}
 }
 
 func (x *IndexHandler) Index() http.HandlerFunc {
