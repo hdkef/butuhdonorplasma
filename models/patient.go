@@ -20,7 +20,4 @@ type Patient struct {
 	Cpname1      string             `bson:"cpname1"`
 	Cptel1       string             `bson:"cptel1"`
 	Cprelation1  string             `bson:"cprelation1"`
-	Cpname2      string             `bson:"cpname2"`
-	Cptel2       string             `bson:"cptel2"`
-	Cprelation2  string             `bson:"cprelation2"`
 }

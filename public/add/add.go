@@ -85,14 +85,6 @@ func handleAddPost(rw http.ResponseWriter, r *http.Request, x *AddHandler) {
 		Cprelation1:  r.FormValue(konstant.Cprelation1),
 	}
 
-	cpname2 := r.FormValue(konstant.Cpname2)
-
-	if cpname2 != "" {
-		patient.Cpname2 = cpname2
-		patient.Cptel2 = r.FormValue(konstant.Cptel2)
-		patient.Cprelation2 = r.FormValue(konstant.Cprelation2)
-	}
-
 	if patient.Name == "" || patient.Age == "" || patient.Desc == "" || patient.HospitalName == "" || patient.ProvinceID == "" || patient.CityID == "" || patient.Goldar == "" || patient.Rhesus == "" {
 		controller.RenderFailed(rw, r, errors.New("something is missing"), addfailtemplates)
 		return

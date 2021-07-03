@@ -82,18 +82,6 @@ func (x *DBRepo) InsertOnePatient(patient models.Patient) (primitive.ObjectID, e
 			Value: patient.Cprelation1,
 		},
 		{
-			Key:   konstant.Cpname2,
-			Value: patient.Cpname2,
-		},
-		{
-			Key:   konstant.Cptel2,
-			Value: patient.Cptel2,
-		},
-		{
-			Key:   konstant.Cprelation2,
-			Value: patient.Cprelation2,
-		},
-		{
 			Key:   konstant.Hospitalname,
 			Value: patient.HospitalName,
 		},

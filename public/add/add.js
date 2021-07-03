@@ -1,27 +1,10 @@
 let cityidSelect = document.getElementById("cityid")
 let provinceidSelect = document.getElementById("provinceid")
-let addContact2 = document.getElementById("addcontact2")
 let addForm = document.forms["addForm"]
 let cp = document.getElementById("cp")
 let selectedprovinceid
 let provincename = document.getElementById("provincename")
 let cityname = document.getElementById("cityname")
-
-addContact2.onclick = (event)=>{
-    var label = document.createElement('label')
-    label.innerText = "contact person 2"
-    var cpname2 = document.createElement('input')
-    cpname2.name = "cpname2"
-    cpname2.placeholder = "Nama Contact Person"
-    var relation2 = document.createElement('input')
-    relation2.placeholder = "Hubungan dengan pasien"
-    relation2.name = "cprelation2"
-    var tel2 = document.createElement('textarea')
-    tel2.name = "cptel2"
-    tel2.placeholder = "List cara menghubungi (WA,Telegram,Line)"
-    cp.append(label,cpname2,relation2,tel2)
-    addContact2.style.display = "none"
-}
 
 provinceidSelect.onchange = (event)=>{
     getCity(provinceidSelect,selectedprovinceid,cityidSelect) //ada di public.js

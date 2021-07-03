@@ -20,13 +20,9 @@
                         <th>Usia</th>
                         <th>Gol. darah</th>
                         <th>Rumah Sakit</th>
+                        <th>Contact</th>
+                        <th>Tel</th>
                         <th>Ket.</th>
-                        <th>Contact 1</th>
-                        <th>Tel</th>
-                        <th>Hub</th>
-                        <th>Contact 2</th>
-                        <th>Tel</th>
-                        <th>Hub</th>
                     </tr>
                     {{range $index, $elem := .}}
                     <tr>
@@ -35,13 +31,9 @@
                         <td>{{$elem.Age}}</td>
                         <td>{{$elem.Goldar}} {{$elem.Rhesus}}</td>
                         <td>{{$elem.HospitalName}}</td>
-                        <td>{{$elem.Desc}}</td>
-                        <td>{{$elem.Cpname1}}</td>
+                        <td>{{$elem.Cpname1}} ( {{$elem.Cprelation1}} )</td>
                         <td>{{$elem.Cptel1}}</td>
-                        <td>{{$elem.Cprelation2}}</td>
-                        <td>{{$elem.Cpname2}}</td>
-                        <td>{{$elem.Cptel2}}</td>
-                        <td>{{$elem.Cprelation2}}</td>
+                        <td>{{$elem.Desc}}</td>
                     </tr>
                     {{end}}
                 </table>
